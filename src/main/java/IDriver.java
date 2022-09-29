@@ -28,15 +28,11 @@ public interface IDriver {
      * @param databaseName
      * @param tableName
      * @param value
-     * @return
-     *      Return True if the row got deleted, and false if it was already not created
      */
     void deleteRow(String databaseName, String tableName, String value) throws Exception;
 
     /**
      * @param databaseName
-     * @return
-     *      Return True if the database got deleted, and false if it was already not created
      */
     void clearDatabase(String databaseName) throws Exception;
 }

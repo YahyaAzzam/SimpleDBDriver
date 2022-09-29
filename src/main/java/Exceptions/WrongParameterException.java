@@ -4,7 +4,7 @@ public class WrongParameterException extends Exception {
     /**
      * @param message
      */
-    public WrongParameterException(final String message){
+    public WrongParameterException(final String message) {
         super(message);
     }
 }
