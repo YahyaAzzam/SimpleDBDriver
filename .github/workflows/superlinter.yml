@@ -1,0 +1,57 @@
+name: Super-Linter
+
+# Run this workflow every time a new commit pushed to your repository
+on: [push]
+
+jobs:
+  # Set the job key. The key is displayed as the job name
+  # when a job name is not provided
+  super-lint:
+    # Name the Job
+    name: Lint code base
+    # Set the type of machine to run on
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v1
+
+      # Runs the Super-Linter action
+      - name: Run Super-Linter
+        uses: docker://github/super-linter:v3.13.1
+        env:
+          DEFAULT_BRANCH: main
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          FILTER_REGEX_EXCLUDE: ".*test/.*"
+      - name: Build and Run Tests
+        run: mvn test "-Dmaven.test.failure.ignore=true"
+      - name: Publish Test Report
+        uses: scacap/action-surefire-report@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}  
+
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        if: always()
+        with:
+          files: "test-results/**/*.xml"  
+
+      - name: Build with Maven
+        run: mvn -B test
+
+      - name: Generate JaCoCo Badge
+        id: jacoco
+        uses: cicirello/jacoco-badge-generator@v2
+
+      - name: Log coverage percentage
+        run: |
+          echo "coverage = ${{ steps.jacoco.outputs.coverage }}"
+          echo "branch coverage = ${{ steps.jacoco.outputs.branches }}"               
+        
+      - name: Upload JaCoCo coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: jacoco-report
+          path: target/site/jacoco/
