@@ -1,7 +1,10 @@
 package main.java.Exceptions;
 
-public class WrongParameterException extends Exception{
-    public WrongParameterException(String message){
+public class WrongParameterException extends Exception {
+    /**
+     * @param message
+     */
+    public WrongParameterException(final String message){
         super(message);
     }
 }

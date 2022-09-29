@@ -1,7 +1,10 @@
 package main.java.Exceptions;
 
-public class NoParameterException extends Exception{
-    public NoParameterException(String message){
+public class NoParameterException extends Exception {
+    /**
+     * @param message
+     */
+    public NoParameterException(final String message) {
         super(message);
     }
 }
