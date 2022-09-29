@@ -17,6 +17,7 @@ public class Driver implements IDriver{
         String command = " -c create -sc " + databaseSchemaPath;
         JSONObject api = execute(command);
         check(api);
+        System.out.println(api);
     }
 
     @Override
@@ -24,6 +25,7 @@ public class Driver implements IDriver{
         String command = " -c set -db " + databaseName + " -t " + tableName + " -q " + value;
         JSONObject api = execute(command);
         check(api);
+        System.out.println(api);
     }
 
     @Override
@@ -31,6 +33,7 @@ public class Driver implements IDriver{
         String command = " -c set -db " + databaseName + " -t " + tableName + " -q " + value;
         JSONObject api = execute(command);
         check(api);
+        System.out.println(api);
         return new JSONArray((String) api.get("result"));
     }
 
@@ -39,6 +42,7 @@ public class Driver implements IDriver{
         String command = " -c set -db " + databaseName + " -t " + tableName + " -q " + value;
         JSONObject api = execute(command);
         check(api);
+        System.out.println(api);
     }
 
     @Override
@@ -46,6 +50,7 @@ public class Driver implements IDriver{
         String command = " -c create -db " + databaseName;
         JSONObject api = execute(command);
         check(api);
+        System.out.println(api);
     }
 
     public static JSONObject execute(String command){
