@@ -4,3 +4,11 @@
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/.name
+target/classes/test/java/DriverTest.class
+*.class
+*.class
+target/classes/main/java/Driver.class
+target/classes/main/java/Exceptions/NoParameterException.class
+target/classes/main/java/Exceptions/OverwriteException.class
+target/classes/main/java/Exceptions/WrongParameterException.class
+target/classes/test/java/DriverTest.class
