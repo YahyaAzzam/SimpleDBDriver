@@ -6,6 +6,7 @@ import main.java.Exceptions.NoParameterException;
 import main.java.Exceptions.OverwriteException;
 import main.java.Exceptions.WrongParameterException;
 import main.java.Executor;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -71,10 +72,8 @@ public class DriverTest {
         apiExpected.put("message","get is a success").put("status","Success");
         Mockito.when(executor.execute(" -c get -db csed25 -t Reservations -q {'ReservationId':'23365'}")).thenReturn(apiExpected);
         try {
-            System.out.println("5265");
-            System.out.println(driver.getRow("csed25", "Reservations", "{'ReservationId':'23365'}"));
-            Assertions.assertTrue(true);
-            //Assertions.assertEquals(apiExpected.get("result"), objectFound);
+            JSONArray objectFound = driver.getRow("csed25", "Reservations", "{'ReservationId':'23365'}");
+            Assertions.assertEquals(apiExpected.get("result"), objectFound.get(0));
         } catch (Exception e) {
             Assertions.assertTrue(true);
         }
@@ -118,6 +117,14 @@ public class DriverTest {
         } catch (Exception e) {
             Assertions.fail();
         }
+    }
+
+    @Test
+    void WrongAttributesClear() throws InternalErrorException {
+        Executor executor = Mockito.mock(Executor.class);
+        Driver driver = new Driver(executor);
+        Mockito.when(executor.execute("Try wrong input")).thenReturn(null);
+        Assertions.assertThrows(WrongParameterException.class, () -> driver.clearDatabase("Try wrong input"));
     }
 
 }
