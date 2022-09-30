@@ -9,10 +9,10 @@ import java.nio.file.Path;
 
 public class Executor {
     /**
-     * @param command
      * @return
      *      Returns the api of the main and null if something wrong happened with the database call
      */
+    @SuppressWarnings("deprecation")
     public JSONObject execute(final String command) {
         try {
             Path dirPath = FileSystems.getDefault().getPath("").toAbsolutePath();
@@ -23,7 +23,6 @@ public class Executor {
             } catch (Exception e) {
                 config = "python ";
             }
-            System.out.println("44444444");
             String cmd = config + databasePath + command;
             Process pr = Runtime.getRuntime().exec(cmd);
             BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));

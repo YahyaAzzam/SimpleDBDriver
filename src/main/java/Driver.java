@@ -13,14 +13,16 @@ public final class Driver implements IDriver {
 
     private Executor executor;
 
-    public Driver(Executor executor){
+    /**
+     * @param executor
+     */
+    public Driver(final Executor executor) {
         this.executor = executor;
     }
 
     @Override
     public void createDatabase(final String databaseSchemaPath) throws Exception {
         String command = " -c create -sc " + databaseSchemaPath;
-        System.out.println(command);
         JSONObject api = executor.execute(command);
         check(api);
     }

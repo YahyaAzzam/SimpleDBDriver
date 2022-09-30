@@ -2,6 +2,7 @@ package test.java;
 
 import main.java.Driver;
 import main.java.Exceptions.NoParameterException;
+import main.java.Exceptions.WrongParameterException;
 import main.java.Executor;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
@@ -17,7 +18,7 @@ public class DriverTest {
         JSONObject apiExpected = new JSONObject().put("result","None");
         apiExpected.put("message","Schema not entered").put("status","WrongParameterError");
         Mockito.when(executor.execute(" -c create -sc Check-in-schema")).thenReturn(apiExpected);
-        Assertions.assertThrows(NoParameterException.class, () -> driver.createDatabase("Check-in-schema"));
+        Assertions.assertThrows(WrongParameterException.class, () -> driver.createDatabase("Check-in-schema"));
     }
 
     @Test
