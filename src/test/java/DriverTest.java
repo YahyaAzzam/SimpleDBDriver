@@ -1,6 +1,7 @@
 package test.java;
 
 import main.java.Driver;
+import main.java.Exceptions.InternalErrorException;
 import main.java.Exceptions.NoParameterException;
 import main.java.Exceptions.WrongParameterException;
 import main.java.Executor;
@@ -12,7 +13,7 @@ import org.mockito.Mockito;
 public class DriverTest {
 
     @Test
-    void testWrongParameterCreate() {
+    void testWrongParameterCreate() throws InternalErrorException {
         Executor executor = Mockito.mock(Executor.class);
         Driver driver = new Driver(executor);
         JSONObject apiExpected = new JSONObject().put("result","None");
@@ -22,7 +23,7 @@ public class DriverTest {
     }
 
     @Test
-    void testNoParameterCreate() {
+    void testNoParameterCreate() throws InternalErrorException {
         Executor executor = Mockito.mock(Executor.class);
         Driver driver = new Driver(executor);
         JSONObject apiExpected = new JSONObject().put("result","None");
@@ -32,7 +33,7 @@ public class DriverTest {
     }
 
     @Test
-    void testCreate(){
+    void testCreate() throws InternalErrorException {
         Executor executor = Mockito.mock(Executor.class);
         Driver driver = new Driver(executor);
         JSONObject apiExpected = new JSONObject().put("result","None");

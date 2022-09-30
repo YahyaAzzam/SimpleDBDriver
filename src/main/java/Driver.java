@@ -11,10 +11,11 @@ import org.json.JSONObject;
 
 public final class Driver implements IDriver {
 
-    private Executor executor;
+    private final Executor executor;
 
     /**
      * @param executor
+     *      The Executor object
      */
     public Driver(final Executor executor) {
         this.executor = executor;
@@ -22,23 +23,21 @@ public final class Driver implements IDriver {
 
     @Override
     public void createDatabase(final String databaseSchemaPath) throws Exception {
-        String command = " -c create -sc " + databaseSchemaPath;
+        String command = String.format(" -c create -sc %s", databaseSchemaPath);
         JSONObject api = executor.execute(command);
         check(api);
     }
 
     @Override
     public void setRow(final String databaseName, final String tableName, final String value) throws Exception {
-        String command = " -c set -db " + databaseName + " -t " + tableName + " -q " + value;
-        Executor executor = new Executor();
+        String command = String.format(" -c set -db %s -t %s -q %s", databaseName, tableName, value);
         JSONObject api = executor.execute(command);
         check(api);
     }
 
     @Override
     public JSONArray getRow(final String databaseName, final String tableName, final String value) throws Exception {
-        String command = " -c get -db " + databaseName + " -t " + tableName + " -q " + value;
-        Executor executor = new Executor();
+        String command = String.format(" -c get -db %s -t %s -q %s", databaseName, tableName, value);
         JSONObject api = executor.execute(command);
         check(api);
         return (JSONArray) api.get("result");
@@ -46,25 +45,21 @@ public final class Driver implements IDriver {
 
     @Override
     public void deleteRow(final String databaseName, final String tableName, final String value) throws Exception {
-        String command = " -c delete -db " + databaseName + " -t " + tableName + " -q " + value;
-        Executor executor = new Executor();
+        String command = String.format(" -c delete -db %s -t %s -q %s", databaseName, tableName, value);
         JSONObject api = executor.execute(command);
         check(api);
-        System.out.println(api);
     }
 
     @Override
     public void clearDatabase(final String databaseName) throws Exception {
-        String command = " -c clear -db " + databaseName;
-        Executor executor = new Executor();
+        String command = String.format(" -c clear -db %s", databaseName);
         JSONObject api = executor.execute(command);
         check(api);
-        System.out.println(api);
     }
 
     /**
      * @param api
-     * @throws Exception
+     *      Api which the function will receive
      */
     private static void check(final JSONObject api) throws Exception {
         if (api == null) {
