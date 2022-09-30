@@ -10,6 +10,7 @@ import java.nio.file.Path;
 public class Executor {
     /*
      * @param command
+     *      command entered
      * @return
      *      Returns the api of the main and null if something wrong happened with the database call
      */
