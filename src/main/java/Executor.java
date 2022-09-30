@@ -26,6 +26,7 @@ public class Executor {
                 config = "python ";
             }
             String cmd = config + databasePath + command;
+            System.out.println(cmd);
             final Process pr = Runtime.getRuntime().exec(cmd);
             BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
             return new JSONObject(input.readLine());
