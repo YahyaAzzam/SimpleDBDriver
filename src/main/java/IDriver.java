@@ -5,38 +5,45 @@ import org.json.JSONArray;
 public interface IDriver {
     /**
      * @param databaseSchemaPath
+     *      Path of the database's schema
      */
-    void createDatabase(String databaseSchemaPath);
+    void createDatabase(String databaseSchemaPath) throws Exception;
 
     /**
      * @param databaseName
+     *      Name of the database
      * @param tableName
+     *      Name of the table
      * @param value
+     *      Values that the function will set
      */
-    void setRow(String databaseName, String tableName, String value);
+    void setRow(String databaseName, String tableName, String value) throws Exception;
 
     /**
      * @param databaseName
+     *      Name of the database
      * @param tableName
+     *      Name of the table
      * @param value
+     *      Values that the function will get
      * @return
      *      Array of json objects of the rows
      */
-    JSONArray getRow(String databaseName, String tableName, String value);
+    JSONArray getRow(String databaseName, String tableName, String value) throws Exception;
 
     /**
      * @param databaseName
+     *      Name of the database
      * @param tableName
+     *      Name of the table
      * @param value
-     * @return
-     *      Return True if the row got deleted, and false if it was already not created
+     *      Values that the function will delete
      */
-    boolean deleteRow(String databaseName, String tableName, String value);
+    void deleteRow(String databaseName, String tableName, String value) throws Exception;
 
     /**
      * @param databaseName
-     * @return
-     *      Return True if the database got deleted, and false if it was already not created
+     *      Name of the database
      */
-    boolean clearDatabase(String databaseName);
+    void clearDatabase(String databaseName) throws Exception;
 }
