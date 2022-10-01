@@ -68,14 +68,15 @@ public class DriverTest {
     void testGet() throws InternalErrorException {
         Executor executor = Mockito.mock(Executor.class);
         Driver driver = new Driver(executor);
-        JSONObject apiExpected = new JSONObject().put("result","[{'ReservationId': '23365', 'Last_name': 'Osama'}]");
+        JSONArray get = new JSONArray("[{'ReservationId': '23365', 'Last_name': 'Osama'}]");
+        JSONObject apiExpected = new JSONObject().put("result",get);
         apiExpected.put("message","get is a success").put("status","Success");
         Mockito.when(executor.execute(" -c get -db csed25 -t Reservations -q {'ReservationId':'23365'}")).thenReturn(apiExpected);
         try {
             JSONArray objectFound = driver.getRow("csed25", "Reservations", "{'ReservationId':'23365'}");
-            Assertions.assertEquals(apiExpected.get("result"), objectFound.get(0));
+            Assertions.assertEquals((JSONArray) apiExpected.get("result"), objectFound);
         } catch (Exception e) {
-            Assertions.assertTrue(true);
+            Assertions.fail();
         }
     }
 
