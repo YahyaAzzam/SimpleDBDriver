@@ -21,7 +21,7 @@ public class Executor {
             Properties properties = new Properties();
             properties.load(fileReader);
             String databasePath = properties.getProperty("databasePath");
-            String config = String.format("%s ",properties.getProperty("config"));
+            String config = String.format("%s ", properties.getProperty("config"));
             fileReader.close();
             final Process pr = Runtime.getRuntime().exec(new String[]{config, databasePath, command});
             BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
