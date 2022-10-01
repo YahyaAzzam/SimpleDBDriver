@@ -4,9 +4,9 @@ import main.java.Exceptions.InternalErrorException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.InputStreamReader;
-import java.nio.file.FileSystems;
-import java.nio.file.Path;
+import java.util.Properties;
 
 public class Executor {
     /**
@@ -17,17 +17,13 @@ public class Executor {
      */
     public JSONObject execute(final String command) throws InternalErrorException {
         try {
-            Path dirPath = FileSystems.getDefault().getPath("").toAbsolutePath();
-            String databasePath = String.valueOf(dirPath.resolveSibling("SimpleFSDB").resolve("src").resolve("main.py"));
-            String config = "py ";
-            try {
-                Runtime.getRuntime().exec(config + "-v");
-            } catch (Exception e) {
-                config = "python ";
-            }
-            String cmd = config + databasePath + command;
-            System.out.println(cmd);
-            final Process pr = Runtime.getRuntime().exec(cmd);
+            FileReader fileReader = new FileReader("driver_properties.properties");
+            Properties properties = new Properties();
+            properties.load(fileReader);
+            String databasePath = properties.getProperty("databasePath");
+            String config = String.format("%s ",properties.getProperty("config"));
+            fileReader.close();
+            final Process pr = Runtime.getRuntime().exec(new String[]{config, databasePath, command});
             BufferedReader input = new BufferedReader(new InputStreamReader(pr.getInputStream()));
             return new JSONObject(input.readLine());
         } catch (Exception e) {
