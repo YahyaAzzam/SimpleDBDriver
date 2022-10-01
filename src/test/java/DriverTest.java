@@ -74,7 +74,23 @@ public class DriverTest {
         Mockito.when(executor.execute(" -c get -db csed25 -t Reservations -q {'ReservationId':'23365'}")).thenReturn(apiExpected);
         try {
             JSONArray objectFound = driver.getRow("csed25", "Reservations", "{'ReservationId':'23365'}");
-            Assertions.assertEquals((JSONArray) apiExpected.get("result"), objectFound);
+            Assertions.assertEquals(apiExpected.get("result"), objectFound);
+        } catch (Exception e) {
+            Assertions.fail();
+        }
+    }
+
+    @Test
+    void testTwoParameterGet() throws InternalErrorException {
+        Executor executor = Mockito.mock(Executor.class);
+        Driver driver = new Driver(executor);
+        JSONArray get = new JSONArray("[{'ReservationId': '23365', 'Last_name': 'Osama'}, {'ReservationId': '49365', 'Last_name': 'Mourad'}]");
+        JSONObject apiExpected = new JSONObject().put("result",get);
+        apiExpected.put("message","get is a success").put("status","Success");
+        Mockito.when(executor.execute(" -c get -db csed25 -t Reservations -q ")).thenReturn(apiExpected);
+        try {
+            JSONArray objectFound = driver.getRow("csed25", "Reservations");
+            Assertions.assertEquals(apiExpected.get("result"), objectFound);
         } catch (Exception e) {
             Assertions.fail();
         }

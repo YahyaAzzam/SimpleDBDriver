@@ -35,6 +35,19 @@ public final class Driver implements IDriver {
         check(api);
     }
 
+    /**
+     * @param databaseName
+     * @param tableName
+     * @return
+     *      Array of json objects of all the rows of the table
+     */
+    public JSONArray getRow(final String databaseName, final String tableName) throws Exception {
+        String command = String.format(" -c get -db %s -t %s -q ", databaseName, tableName);
+        JSONObject api = executor.execute(command);
+        check(api);
+        return (JSONArray) api.get("result");
+    }
+
     @Override
     public JSONArray getRow(final String databaseName, final String tableName, final String value) throws Exception {
         String command = String.format(" -c get -db %s -t %s -q %s", databaseName, tableName, value);
