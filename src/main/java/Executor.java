@@ -40,6 +40,7 @@ import java.util.Properties;
 
     /**
      * @param command
+     *      Command attributes for the database
      * @return
      *      The api from the database as a json object
      */

@@ -8,6 +8,8 @@ import main.java.Exceptions.WrongParameterException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 
 public final class Driver implements IDriver {
 
@@ -19,6 +21,13 @@ public final class Driver implements IDriver {
      */
     public Driver(final Executor executor) {
         this.executor = executor;
+    }
+
+    /**
+     *
+     */
+    public Driver() throws IOException {
+        this.executor = Executor.getInstance();
     }
 
     @Override
@@ -37,7 +46,9 @@ public final class Driver implements IDriver {
 
     /**
      * @param databaseName
-     * @param tableName
+     *      Name of the database
+     *@param tableName
+     *      Name of the table
      * @return
      *      Array of json objects of all the rows of the table
      */
